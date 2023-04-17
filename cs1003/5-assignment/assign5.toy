@@ -1,0 +1,41 @@
+/******************************************************************************
+ *  Name:
+ *  NetID:
+ *  Precept:
+ *
+ *  Description:
+ *
+ ******************************************************************************/
+
+10: 82FF   read R[2]                     
+11: 7300   R[3] <- 0000                  
+12: 7401   R[4] <- 0001                  
+
+13: 1C20   R[C] <- R[2]                  
+14: 1D20   R[D] <- R[2]                  
+15: F630   R[6] <- PC; goto 30           
+
+16: 1CE0   R[C] <- R[E]                  
+17: 2DE4   R[D] <- R[E] - R[4]                         
+18: F630   R[6] <- PC; goto 30                             
+
+19: 9EFF   write R[E]                    
+
+1A: 0000   halt                          
+
+# Function Multiply
+# 6 return register
+# C parameter register number 1
+# D parameter register number 2
+# E result register
+30: 7734   R[7] <- 0034                  # Top of function
+31: 7839   R[8] <- 0039                  # End of function
+32: 7901   R[9] <- 0001                  # Function constant 1
+33: 7E00   R[E] <- 0000                  # result 
+34: CD39   if (R[D] == 0) goto 39        
+35: 1EEC   R[E] <- R[E] + R[C]           
+36: 9EFF   write R[E]                    
+37: 2DD9   R[D] <- R[D] - R[9]           
+38: E700   goto R[7]                     
+39: E600   goto R[6]                     
+
